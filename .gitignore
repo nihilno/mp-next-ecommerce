@@ -45,4 +45,9 @@ node_modules
 .next
 dist
 build
-/app/generated/prisma
+/prisma/generated/prisma
+
+# Prisma
+/prisma/generated/prisma
+!/prisma/generated/prisma/.gitkeep  # optional
+prisma/generated/

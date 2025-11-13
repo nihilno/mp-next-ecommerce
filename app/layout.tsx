@@ -1,9 +1,17 @@
+import Footer from "@/components/global/Footer";
+import Navbar from "@/components/navbar/Navbar";
+import Providers from "@/components/providers/providers";
+import { inter } from "@/lib/fonts";
 import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Next | Ecommerce",
-  description: "Ecommerce App made with NextJS",
+  title: {
+    template: "%s | Next Ecommerce",
+    default: "Home | Next Ecommerce",
+  },
+  description:
+    "An ecommerce website built with Next.js, TypeScript, and Prisma.",
 };
 
 export default function RootLayout({
@@ -12,8 +20,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`antialiased`}>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={`${inter.className} flex min-h-dvh flex-col antialiased`}
+      >
+        <Providers>
+          <Navbar />
+          <main className="container mx-auto flex-1 px-4 py-6">{children}</main>
+          <Footer />
+        </Providers>
+      </body>
     </html>
   );
 }

@@ -1,6 +1,14 @@
-import { Product } from "@/app/generated/prisma/client";
+import {
+  Card,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { formatPrice } from "@/lib/utils";
+import { Product } from "@/prisma/generated/prisma/client";
 import Image from "next/image";
+import Link from "next/link";
 
 type ProductCardProps = {
   product: Product;
@@ -9,21 +17,30 @@ type ProductCardProps = {
 
 function ProductCard({ product, loading = "lazy" }: ProductCardProps) {
   return (
-    <div className="rounded-lg border border-gray-200 p-4">
-      <div className="relative aspect-video">
-        <Image
-          src={product.image}
-          alt={product.name}
-          fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          className="object-cover"
-          loading={loading}
-        />
-      </div>
-      <h2 className="text-lg font-semibold">{product.name}</h2>
-      <p className="text-gray-600">{formatPrice(product.price)}</p>
-      <p className="text-gray-500">{product.description}</p>
-    </div>
+    <Link href={`/product/${product.slug}`}>
+      <Card className="overflow-hidden pt-0">
+        <div className="relative aspect-video">
+          <Image
+            src={product.image}
+            alt={product.name}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover"
+            loading={loading}
+          />
+        </div>
+
+        <CardHeader>
+          <CardTitle className="text-xl">{product.name}</CardTitle>
+          <CardDescription className="min-h-10">
+            {product.description}
+          </CardDescription>
+        </CardHeader>
+        <CardFooter className="mt-auto text-lg">
+          {formatPrice(product.price)}
+        </CardFooter>
+      </Card>
+    </Link>
   );
 }
 
