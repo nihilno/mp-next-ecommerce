@@ -1,11 +1,15 @@
-import { PrismaClient, Product } from "@/prisma/generated/prisma/client";
+import { hashPassword } from "@/lib/auth";
+import { PrismaClient } from "@/prisma/generated/prisma/client";
 import "dotenv/config";
 
 const prisma = new PrismaClient();
 
 async function main() {
+  // await prisma.orderItem.deleteMany();
+  // await prisma.order.deleteMany();
   await prisma.product.deleteMany();
   await prisma.category.deleteMany();
+  await prisma.user.deleteMany();
 
   const electronics = await prisma.category.create({
     data: {
@@ -28,7 +32,7 @@ async function main() {
     },
   });
 
-  const products: Product[] = [
+  const products = [
     {
       id: "1",
       name: "Wireless Headphones",
@@ -67,7 +71,7 @@ async function main() {
       description: "Handcrafted ceramic mug with minimalist design.",
       price: 24.99,
       image: "https://images.unsplash.com/photo-1514228742587-6b1558fcca3d",
-      slug: "cermaic-mug",
+      slug: "ceramic-mug",
       categoryId: home.id,
       inventory: 0,
     },
@@ -192,6 +196,35 @@ async function main() {
   for (const product of products) {
     await prisma.product.create({
       data: product,
+    });
+  }
+
+  const users = [
+    {
+      id: "1",
+      name: "Maciej",
+      email: "maciej.polowy1@gmail.com",
+      password: "password123",
+      role: "user",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      id: "2",
+      name: "Jacob",
+      email: "jacob.black1@gmail.com",
+      password: "password456",
+      role: "user",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+  ];
+
+  for (const user of users) {
+    const hashedPassword = await hashPassword(user.password);
+
+    await prisma.user.create({
+      data: { ...user, password: hashedPassword },
     });
   }
 }

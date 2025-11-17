@@ -1,10 +1,10 @@
-import { categories } from "@/lib/links";
+import { navCategories } from "@/lib/links";
 import Link from "next/link";
 
 function CategoriesList() {
   return (
     <nav className="hidden md:flex md:items-center md:gap-6">
-      {categories.map((category) => (
+      {navCategories.map((category) => (
         <Link
           key={category.id}
           href={category.href}

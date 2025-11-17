@@ -31,11 +31,12 @@ function ProductCard({ product, loading = "lazy" }: ProductCardProps) {
         </div>
 
         <CardHeader>
-          <CardTitle className="text-xl">{product.name}</CardTitle>
-          <CardDescription className="min-h-10">
+          <CardTitle className="line-clamp-1 text-xl">{product.name}</CardTitle>
+          <CardDescription className="line-clam-3 min-h-20">
             {product.description}
           </CardDescription>
         </CardHeader>
+
         <CardFooter className="mt-auto text-lg">
           {formatPrice(product.price)}
         </CardFooter>

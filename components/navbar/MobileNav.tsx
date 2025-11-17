@@ -9,7 +9,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { categories } from "@/lib/links";
+import { navCategories } from "@/lib/links";
 import { MenuIcon } from "lucide-react";
 import Link from "next/link";
 
@@ -45,7 +45,7 @@ function MobileNav() {
               <h3 className="text-muted-foreground mt-8 mb-4 font-medium">
                 Categories
               </h3>
-              {categories.map((category) => (
+              {navCategories.map((category) => (
                 <SheetClose key={category.id} asChild>
                   <Link
                     href={category.href}

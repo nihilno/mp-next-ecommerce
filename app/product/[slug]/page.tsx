@@ -18,11 +18,6 @@ export async function generateMetadata({
     openGraph: {
       title: product.name,
       description: product.description,
-      images: [
-        {
-          url: product.image,
-        },
-      ],
     },
   };
 }
@@ -39,7 +34,7 @@ export default async function SingleProductPage({
     { label: "products", href: "/" },
     {
       label: product?.category.name || "category",
-      href: `/category/${product.category?.slug}`,
+      href: `/search/${(product?.category.name).toLowerCase()}`,
     },
     { label: product?.name || "product", active: true },
   ];

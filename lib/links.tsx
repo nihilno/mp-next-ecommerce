@@ -1,12 +1,5 @@
-import { Search, ShoppingCart } from "lucide-react";
-
-export const navButtons = [
-  { slug: "search", icon: <Search />, href: "/search" },
-  { slug: "cart", icon: <ShoppingCart />, href: "/cart" },
-];
-
-export const categories = [
-  { id: 1, name: "Electronics", href: "/cart" },
-  { id: 2, name: "Clothes", href: "/cart" },
-  { id: 3, name: "Home", href: "/cart" },
+export const navCategories = [
+  { id: 1, name: "Electronics", href: "/search/electronics" },
+  { id: 2, name: "Clothing", href: "/search/clothing" },
+  { id: 3, name: "Home", href: "/search/home" },
 ];

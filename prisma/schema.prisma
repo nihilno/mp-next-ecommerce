@@ -15,9 +15,11 @@ model Product {
   price       Float
   image       String
   slug        String   @unique
-  category    Category @relation(fields: [categoryId], references: [id])
   categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id])
   inventory   Int      @default(0)
+  cartItems   CartItem[]
+  orderItem   OrderItem[]
 }
 
 model Category {
@@ -25,4 +27,59 @@ model Category {
   name     String
   slug     String    @unique
   products Product[]
+}
+
+model Cart {
+  id        String    @id @default(cuid())
+  items     CartItem[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model CartItem {
+  id        String    @id @default(cuid())
+  cart      Cart      @relation(fields: [cartId], references: [id])
+  cartId    String
+  product   Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+  quantity  Int       @default(1)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@unique([cartId, productId])
+  @@index([cartId])
+  @@index([productId])
+}
+
+model Order {
+  id        String    @id @default(cuid())
+  total     Float
+  status    String    @default("pending")
+  items     OrderItem[]
+  stripeSessionId String?
+  stripePaymentIntentId String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model OrderItem {
+  id        String    @id @default(cuid())
+  order     Order     @relation(fields: [orderId], references: [id])
+  orderId   String
+  product   Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+  quantity  Int       @default(1)
+  price     Float
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model User {
+  id        String    @id @default(cuid())
+  name      String?
+  email     String    @unique
+  password  String
+  role      String    @default("user")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }

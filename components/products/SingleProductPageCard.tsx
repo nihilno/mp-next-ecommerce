@@ -1,5 +1,5 @@
+import AddToCartButton from "@/components/global/AddToCartButton";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -10,12 +10,14 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { ProductWithCategory } from "@/lib/types";
 import { formatPrice } from "@/lib/utils";
-import { ShoppingCart } from "lucide-react";
 import Image from "next/image";
 
-function SingleProductPageCard({ product }: { product: ProductWithCategory }) {
+async function SingleProductPageCard({
+  product,
+}: {
+  product: ProductWithCategory;
+}) {
   const { image, name, price, category, description, inventory } = product;
-  const disabled = inventory < 1;
 
   return (
     <Card className="mx-auto mt-12 max-w-4xl cursor-default py-0 md:py-0">
@@ -79,11 +81,8 @@ function SingleProductPageCard({ product }: { product: ProductWithCategory }) {
 
           <Separator className="my-4" />
 
-          <div className="mt-auto">
-            <Button disabled={disabled} className="w-36 transition-all">
-              <ShoppingCart className="mr-1 h-4 w-4" />
-              {inventory > 0 ? "Add to Cart" : "Out of stock"}
-            </Button>
+          <div className="mt-auto pt-4">
+            <AddToCartButton product={product} />
           </div>
         </div>
       </CardContent>
