@@ -1,8 +1,17 @@
-import bcrypt from "bcryptjs";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import { comparePasswords } from "./actions/auth";
 import { prisma } from "./prisma";
 import { LoginSchema } from "./schemas";
+
+declare module "next-auth" {
+  interface User {
+    id: string;
+    name: string | null;
+    email: string;
+    role: string;
+  }
+}
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -31,7 +40,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           );
           if (!passwordsMatch) return null;
 
-          return user;
+          return {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            role: user.role,
+          };
         } catch (error) {
           console.error(error);
           return null;
@@ -39,20 +53,27 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
     }),
   ],
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+        token.role = user.role;
+      }
+
+      return token;
+    },
+
+    async session({ session, token }) {
+      if (session.user) {
+        session.user.id = token.id as string;
+        session.user.role = token.role as string;
+      }
+
+      return session;
+    },
+  },
   pages: {
     signIn: "/auth/signin",
     signOut: "/auth/signout",
   },
 });
-
-export async function hashPassword(password: string) {
-  const saltRounds = 10;
-  return await bcrypt.hash(password, saltRounds);
-}
-
-export async function comparePasswords(
-  password: string,
-  hashedPassword: string,
-) {
-  return await bcrypt.compare(password, hashedPassword);
-}

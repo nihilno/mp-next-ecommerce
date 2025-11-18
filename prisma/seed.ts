@@ -1,4 +1,4 @@
-import { hashPassword } from "@/lib/auth";
+import { hashPassword } from "@/lib/actions/auth";
 import { PrismaClient } from "@/prisma/generated/prisma/client";
 import "dotenv/config";
 
@@ -204,17 +204,8 @@ async function main() {
       id: "1",
       name: "Maciej",
       email: "maciej.polowy1@gmail.com",
-      password: "password123",
-      role: "user",
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-    {
-      id: "2",
-      name: "Jacob",
-      email: "jacob.black1@gmail.com",
-      password: "password456",
-      role: "user",
+      password: "qwerty123",
+      role: "admin",
       createdAt: new Date(),
       updatedAt: new Date(),
     },

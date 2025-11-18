@@ -1,12 +1,16 @@
 "use server";
 
+import { PAGE_SIZE } from "@/lib/constants";
+import { prisma } from "@/lib/prisma";
+import {
+  CartWithProduct,
+  ProductWithCategory,
+  ShoppingCart,
+} from "@/lib/types";
 import { Prisma } from "@/prisma/generated/prisma/client";
 import { revalidateTag, unstable_cache } from "next/cache";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
-import { PAGE_SIZE } from "./constants";
-import { prisma } from "./prisma";
-import { CartWithProduct, ProductWithCategory, ShoppingCart } from "./types";
 
 export type GetProductsParams = {
   query?: string;
@@ -22,7 +26,7 @@ export async function findCartFromCookie(): Promise<CartWithProduct | null> {
 
   if (!cartId) return null;
 
-  return unstable_cache(
+  const cart = await unstable_cache(
     async (id: string) => {
       return await prisma.cart.findUnique({
         where: { id },
@@ -34,6 +38,13 @@ export async function findCartFromCookie(): Promise<CartWithProduct | null> {
     [`cart-${cartId}`],
     { tags: [`cart-${cartId}`] },
   )(cartId);
+
+  if (!cart) {
+    (await cookies()).set("cartId", "", { maxAge: 0 });
+    return null;
+  }
+
+  return cart;
 }
 
 export async function getProducts({
@@ -137,6 +148,7 @@ export async function AddToCart(productId: string, quantity: number = 1) {
   const cart = await getOrCreateCart();
 
   const existingItem = cart.items.find((item) => item.productId === productId);
+
   if (existingItem)
     await prisma.cartItem.update({
       where: {

@@ -1,5 +1,5 @@
 import OtherProviders from "@/components/auth/OtherProviders";
-import SignInForm from "@/components/auth/SignInForm";
+import SignUpForm from "@/components/auth/SignUpForm";
 import {
   Card,
   CardContent,
@@ -12,28 +12,26 @@ import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Sign In",
+  title: "Sign Up",
 };
 
-export default function SignInPage() {
+export default function SignUpPage() {
   return (
     <section className="grid min-h-[calc(100dvh-241px)] place-items-center">
       <Card className="w-full max-w-sm py-8">
         <CardHeader className="mb-4 w-full text-lg">
           <UserIcon className="text-primary mx-auto mb-2 h-10 w-10" />
-          <CardTitle className="mx-auto mb-1">
-            Sign In to your account
-          </CardTitle>
+          <CardTitle className="mx-auto mb-1">Create a free account</CardTitle>
           <CardDescription className="mx-auto text-center">
-            Or{" "}
-            <Link href="/auth/signup" className="text-primary hover:underline">
-              create an account
+            Already have an account?{" "}
+            <Link href="/auth/signin" className="text-primary hover:underline">
+              Sing in.
             </Link>
           </CardDescription>
         </CardHeader>
 
         <CardContent>
-          <SignInForm />
+          <SignUpForm />
           <OtherProviders />
         </CardContent>
       </Card>

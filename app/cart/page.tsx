@@ -2,8 +2,9 @@ import CartEmpty from "@/components/cart/CartEmpty";
 import CartItem from "@/components/cart/CartItem";
 import CartSummary from "@/components/cart/CartSummary";
 import { Button } from "@/components/ui/button";
-import { getCart } from "@/lib/actions";
-import { processCheckout, ProcessCheckoutResponse } from "@/lib/orders";
+import { getCart } from "@/lib/actions/cart";
+
+import { processCheckout, ProcessCheckoutResponse } from "@/lib/actions/orders";
 import { ShoppingCart } from "lucide-react";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";

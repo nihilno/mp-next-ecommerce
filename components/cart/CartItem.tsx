@@ -1,6 +1,6 @@
 "use client";
 
-import { setProductQuantity } from "@/lib/actions";
+import { setProductQuantity } from "@/lib/actions/cart";
 import { CartItemWithProduct } from "@/lib/types";
 import { formatPrice } from "@/lib/utils";
 import { Minus, Plus, X } from "lucide-react";

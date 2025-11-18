@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { getCart } from "@/lib/actions";
+import { getCart } from "@/lib/actions/cart";
 import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
 

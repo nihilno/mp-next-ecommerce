@@ -1,5 +1,5 @@
 import ProductCard from "@/components/products/ProductCard";
-import { GetProductsParams } from "@/lib/actions";
+import { GetProductsParams } from "@/lib/actions/cart";
 import { Product } from "@/prisma/generated/prisma/client";
 import ProductEmpty from "./ProductEmpty";
 

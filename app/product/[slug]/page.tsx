@@ -1,6 +1,6 @@
 import Breadcrumbs from "@/components/global/Breadcrumbs";
 import SingleProductPageCard from "@/components/products/SingleProductPageCard";
-import { getProductBySlugAction } from "@/lib/actions";
+import { getProductBySlugAction } from "@/lib/actions/cart";
 
 export async function generateMetadata({
   params,

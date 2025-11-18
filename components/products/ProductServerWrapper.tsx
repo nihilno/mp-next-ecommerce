@@ -1,4 +1,4 @@
-import { getProducts, GetProductsParams } from "@/lib/actions";
+import { getProducts, GetProductsParams } from "@/lib/actions/cart";
 import ProductList from "./ProductList";
 
 type ProductServerWrapperProps = {

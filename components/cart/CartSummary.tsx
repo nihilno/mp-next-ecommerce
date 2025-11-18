@@ -1,4 +1,4 @@
-import { getCart } from "@/lib/actions";
+import { getCart } from "@/lib/actions/cart";
 import { formatPrice } from "@/lib/utils";
 import { CreditCard, FileText, Percent, Truck } from "lucide-react";
 

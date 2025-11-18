@@ -1,6 +1,6 @@
 "use client";
 
-import { AddToCart } from "@/lib/actions";
+import { AddToCart } from "@/lib/actions/cart";
 import { Product } from "@/prisma/generated/prisma/client";
 import { ArrowRight, Loader2Icon, ShoppingCart } from "lucide-react";
 import Link from "next/link";
