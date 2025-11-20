@@ -3,7 +3,13 @@ import Breadcrumbs from "@/components/global/Breadcrumbs";
 
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { Metadata } from "next";
 import { redirect } from "next/navigation";
+
+export const metadata: Metadata = {
+  title: "My Account",
+  description: "Manage your account and view your order history.",
+};
 
 export default async function AccountPage() {
   const session = await auth();

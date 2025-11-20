@@ -13,6 +13,7 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Sign In",
+  description: "Sign in to your account to access your orders and more.",
 };
 
 export default function SignInPage() {

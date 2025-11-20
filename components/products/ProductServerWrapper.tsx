@@ -1,4 +1,4 @@
-import { getProducts, GetProductsParams } from "@/lib/actions/cart";
+import { getProductsCached, GetProductsParams } from "@/lib/actions/cart";
 import ProductList from "./ProductList";
 
 type ProductServerWrapperProps = {
@@ -6,7 +6,7 @@ type ProductServerWrapperProps = {
 };
 
 async function ProductServerWrapper({ params }: ProductServerWrapperProps) {
-  const products = await getProducts(params);
+  const products = await getProductsCached(params);
 
   return <ProductList products={products} params={params} />;
 }

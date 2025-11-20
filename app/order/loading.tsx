@@ -1,4 +1,4 @@
-import { BreadcrumbsSkeleton } from "@/components/skeletons/ProductSkeletons";
+import { BreadcrumbsSkeleton } from "@/components/skeletons/BreadcrumbSkeletons";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Loading() {

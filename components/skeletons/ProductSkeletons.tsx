@@ -8,7 +8,6 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Loader2Icon } from "lucide-react";
-import Link from "next/link";
 
 export function ProductCardSkeleton() {
   return (
@@ -86,17 +85,7 @@ export function SingleProductPageSkeleton() {
   );
 }
 
-export function BreadcrumbsSkeleton() {
-  return (
-    <div className="flex h-5 items-center gap-4">
-      <Skeleton className="h-5 w-5 rounded-full" />
-      <Skeleton className="h-full w-16 md:w-24" />
-      <Skeleton className="h-full w-16 md:w-24" />
-    </div>
-  );
-}
-
-export function CartIndicatorSkeleton() {
+export function IconLoadingSkeleton() {
   return (
     <Button
       asChild
@@ -105,9 +94,9 @@ export function CartIndicatorSkeleton() {
       className="relative opacity-50"
       disabled
     >
-      <Link href="/cart">
+      <div>
         <Loader2Icon className="h-4 w-4 animate-spin" />
-      </Link>
+      </div>
     </Button>
   );
 }

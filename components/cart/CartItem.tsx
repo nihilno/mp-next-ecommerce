@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { setProductQuantity } from "@/lib/actions/cart";
 import { CartItemWithProduct } from "@/lib/types";
 import { formatPrice } from "@/lib/utils";
@@ -7,7 +8,6 @@ import { Minus, Plus, X } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import { toast } from "sonner";
-import { Button } from "../ui/button";
 
 type CartItemProps = {
   cartItem: CartItemWithProduct;
@@ -18,7 +18,6 @@ function CartItem({ cartItem }: CartItemProps) {
     product: { id, name, image, price, description },
     quantity,
   } = cartItem;
-
   const [isLoading, setIsLoading] = useState(false);
 
   async function handleSetProductQuantity(quantity: number) {

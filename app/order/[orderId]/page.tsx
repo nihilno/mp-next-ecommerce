@@ -4,7 +4,19 @@ import OrderItem from "@/components/order/OrderItem";
 import OrderSummary from "@/components/order/OrderSummary";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
+
+export const metadata: Metadata = {
+  title: "Order Details",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
+
+export const openGraph = null;
+export const twitter = null;
 
 type OrderPageProps = {
   params: Promise<{ orderId: string }>;

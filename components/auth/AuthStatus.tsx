@@ -1,8 +1,8 @@
 "use client";
 
-import { CartIndicatorSkeleton } from "@/components/skeletons/ProductSkeletons";
+import { IconLoadingSkeleton } from "@/components/skeletons/ProductSkeletons";
 import { Button } from "@/components/ui/button";
-import { User, UserPlus } from "lucide-react";
+import { LogOut, Settings, User, UserPlus } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import {
@@ -17,7 +17,7 @@ import {
 function AuthStatus() {
   const { data: session, status } = useSession();
 
-  if (status === "loading") return <CartIndicatorSkeleton />;
+  if (status === "loading") return <IconLoadingSkeleton />;
   if (status === "unauthenticated")
     return (
       <Button variant="ghost" size="icon" asChild>
@@ -30,19 +30,39 @@ function AuthStatus() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon">
-          <User className="h-4 w-4" />
+        <Button
+          variant="ghost"
+          size="icon"
+          className="hover:bg-accent/60 relative rounded-full"
+        >
+          <User className="h-5 w-5" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-36 text-sm" align="center">
-        <DropdownMenuLabel>
+
+      <DropdownMenuContent
+        className="bg-popover w-44 rounded-xl p-1 text-sm shadow-lg"
+        align="end"
+      >
+        <DropdownMenuLabel className="py-2 text-center font-semibold">
           {session?.user?.name || "My Account"}
         </DropdownMenuLabel>
+
         <DropdownMenuSeparator />
-        <DropdownMenuItem asChild>
-          <Link href="/account">My Account</Link>
+
+        <DropdownMenuItem asChild className="cursor-pointer">
+          <Link href="/account" className="flex items-center gap-2">
+            <Settings className="h-4 w-4 opacity-80" />
+            My Account
+          </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => signOut()}>Sign Out</DropdownMenuItem>
+
+        <DropdownMenuItem
+          onClick={() => signOut()}
+          className="text-destructive focus:text-destructive flex cursor-pointer items-center gap-2"
+        >
+          <LogOut className="h-4 w-4 opacity-80" />
+          Sign Out
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

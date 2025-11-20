@@ -39,17 +39,13 @@ function OrdersTable({ orders }: { orders: Order[] }) {
 
         {orders.map((order) => (
           <TableRow key={order.id}>
-            <TableCell className="font-medium">{order.id}</TableCell>
-            <TableCell className="font-medium">
+            <TableCell>{order.id}</TableCell>
+            <TableCell>
               <OrderStatusBadge status={order.status} />
             </TableCell>
-            <TableCell className="font-medium">
-              {formatPrice(order.total)}
-            </TableCell>
-            <TableCell className="font-medium">
-              {order.createdAt.toLocaleString()}
-            </TableCell>
-            <TableCell className="font-medium">
+            <TableCell>{formatPrice(order.total)}</TableCell>
+            <TableCell>{order.createdAt.toLocaleString()}</TableCell>
+            <TableCell>
               <Link className="underline" href={`/order/${order.id}`}>
                 View
               </Link>

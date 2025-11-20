@@ -1,6 +1,6 @@
 import CategorySidebar from "@/components/products/CategorySidebar";
 import CategorySorting from "@/components/products/CategorySorting";
-import { prisma } from "@/lib/prisma";
+import { getCategoriesCached } from "@/lib/actions/cart";
 import { Suspense } from "react";
 
 export default function SearchLayout({
@@ -24,10 +24,6 @@ export default function SearchLayout({
 }
 
 async function CategorySidebarServerWrapper() {
-  const categories = await prisma.category.findMany({
-    select: { name: true, slug: true },
-    orderBy: { name: "asc" },
-  });
-
+  const categories = await getCategoriesCached();
   return <CategorySidebar categories={categories} />;
 }

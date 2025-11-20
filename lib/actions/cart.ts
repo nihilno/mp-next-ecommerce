@@ -1,5 +1,9 @@
 "use server";
 
+import {
+  CreateProductsCacheKey,
+  CreateProductsCacheTags,
+} from "@/lib/cache-keys";
 import { PAGE_SIZE } from "@/lib/constants";
 import { prisma } from "@/lib/prisma";
 import {
@@ -20,7 +24,8 @@ export type GetProductsParams = {
   pageSize?: number;
 };
 
-// helpers
+//  HELPERS
+
 export async function findCartFromCookie(): Promise<CartWithProduct | null> {
   const cartId = (await cookies()).get("cartId")?.value;
 
@@ -28,7 +33,7 @@ export async function findCartFromCookie(): Promise<CartWithProduct | null> {
 
   const cart = await unstable_cache(
     async (id: string) => {
-      return await prisma.cart.findUnique({
+      return prisma.cart.findUnique({
         where: { id },
         include: {
           items: { include: { product: true }, orderBy: { createdAt: "desc" } },
@@ -88,6 +93,13 @@ export async function getProducts({
   });
 }
 
+export async function getCategories() {
+  return prisma.category.findMany({
+    select: { name: true, slug: true },
+    orderBy: { name: "asc" },
+  });
+}
+
 export async function getProductBySlugAction(
   slug: string,
 ): Promise<ProductWithCategory> {
@@ -106,6 +118,13 @@ export async function getProductBySlugAction(
     console.error(error);
     throw error;
   }
+}
+
+export async function getCategoryBySlug(slug: string) {
+  return await prisma.category.findUnique({
+    where: { slug },
+    select: { name: true, slug: true },
+  });
 }
 
 // CART
@@ -198,4 +217,59 @@ export async function setProductQuantity(productId: string, quantity: number) {
     console.error(error);
     throw new Error("Failed to update cart item quantity");
   }
+}
+
+// CACHED
+
+export async function getProductsCached({
+  query,
+  slug,
+  sort,
+  page = 1,
+  pageSize = PAGE_SIZE,
+}: GetProductsParams) {
+  // key + tag generation
+  const cacheKey = CreateProductsCacheKey({
+    slug,
+    search: query,
+    sort,
+    page,
+    limit: pageSize,
+  });
+  const cacheTags = CreateProductsCacheTags({ slug, search: query });
+
+  return unstable_cache(
+    async () => getProducts({ query, slug, sort, page, pageSize }),
+    [cacheKey],
+    { tags: cacheTags, revalidate: 3600 },
+  )();
+}
+
+export async function getProductsCountCached() {
+  return unstable_cache(() => prisma.product.count(), ["products-count"], {
+    tags: ["products"],
+    revalidate: 3600,
+  })();
+}
+
+export async function getCategoryBySlugCached(slug: string) {
+  return unstable_cache(() => getCategoryBySlug(slug), [`category-${slug}`], {
+    tags: [`category-${slug}`],
+    revalidate: 3600,
+  })();
+}
+
+export async function getProductBySlugActionCached(slug: string) {
+  return unstable_cache(
+    () => getProductBySlugAction(slug),
+    [`product-${slug}`],
+    { tags: [`product-${slug}`], revalidate: 3600 },
+  )();
+}
+
+export async function getCategoriesCached() {
+  return unstable_cache(() => getCategories(), ["categories"], {
+    tags: ["categories"],
+    revalidate: 3600,
+  })();
 }

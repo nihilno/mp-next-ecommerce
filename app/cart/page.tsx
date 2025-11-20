@@ -12,7 +12,14 @@ import { toast } from "sonner";
 
 export const metadata: Metadata = {
   title: "Checkout",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
+
+export const openGraph = null;
+export const twitter = null;
 
 export default async function CartPage() {
   const cart = await getCart();

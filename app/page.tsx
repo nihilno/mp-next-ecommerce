@@ -2,14 +2,14 @@ import Breadcrumbs from "@/components/global/Breadcrumbs";
 import MainPagination from "@/components/global/MainPagination";
 import ProductServerWrapper from "@/components/products/ProductServerWrapper";
 import { ProductsSkeleton } from "@/components/skeletons/ProductSkeletons";
+import { getProductsCountCached } from "@/lib/actions/cart";
 import { PAGE_SIZE } from "@/lib/constants";
-import { prisma } from "@/lib/prisma";
 import { Suspense } from "react";
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
 export default async function HomePage(props: { searchParams: SearchParams }) {
-  const total = await prisma.product.count();
+  const total = await getProductsCountCached();
   const searchParams = await props.searchParams;
   const page = Number(searchParams.page) || 1;
   const totalPages = Math.ceil(total / PAGE_SIZE);

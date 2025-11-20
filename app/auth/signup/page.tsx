@@ -13,6 +13,7 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Sign Up",
+  description: "Create a new account to start shopping.",
 };
 
 export default function SignUpPage() {

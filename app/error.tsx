@@ -26,7 +26,8 @@ export default function Error({
       </h2>
 
       <p className="text-muted-foreground mb-8 max-w-md text-sm">
-        {error.message || "The app hiccuped. Don't worry — your jobs are safe."}
+        {error.message ||
+          "An error occured, but don't worry — we'll get you back."}
       </p>
 
       <div className="flex flex-row-reverse items-center gap-4">
