@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
+const baseConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
@@ -22,4 +22,6 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+//@ts-ignore
+import { withPrismaPlugin } from "@prisma/nextjs-monorepo-workaround-plugin";
+export default withPrismaPlugin(baseConfig);
