@@ -1,3 +1,4 @@
+import OrderStatusBadge from "@/components/order/OrderStatusBadge";
 import {
   Table,
   TableBody,
@@ -10,7 +11,6 @@ import {
 import { formatPrice } from "@/lib/utils";
 import { Order } from "@/prisma/generated/prisma/client";
 import Link from "next/link";
-import OrderStatusBadge from "../order/OrderStatusBadge";
 
 function OrdersTable({ orders }: { orders: Order[] }) {
   return (
